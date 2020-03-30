@@ -22,6 +22,8 @@
     ----------------------------------------------------------------------------
 
 ============================================================================"""
+version = "CP4-20"
+
 import sys
 import os
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
@@ -57,7 +59,7 @@ class MainPage():
     def __init__(self, navigate):
         # Load a UI resource file
         self.widget = uic.loadUi(os.path.join(config.qt_path,'main_page.ui'))
-
+        self.widget.version.setText(version)
         # Attach action to buttons
         self.widget.credits_button.clicked.connect(lambda: navigate("credits_page"))
         self.widget.boring_button.clicked.connect(lambda: navigate("boring_page"))
