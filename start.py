@@ -40,7 +40,6 @@ config.sound_path    = os.path.join(config.root_path,'sound')        # sound eff
 config.screen_width  = 1000
 config.screen_height = 700
 
-
 # Create a widget, using a HTML file (located in the html_path.
 # The  widget can only interpret simple HTML. It uses a subset of HTML 3.2 and 4. And css 2.1
 # External links wil be opned in the system browser, where as internal links wil be followed 
@@ -54,7 +53,6 @@ class SimpleHTMLPage:
         # Load the HTML, markdown or text file
         self.widget.setSource(QtCore.QUrl().fromLocalFile(os.path.join(config.html_path,url)))
 
-
 class MainPage():
     def __init__(self, navigate):
         # Load a UI resource file
@@ -65,7 +63,6 @@ class MainPage():
         self.widget.boring_button.clicked.connect(lambda: navigate("boring_page"))
         self.widget.play_button.clicked.connect(lambda: navigate("play"))
         self.widget.exit_button.clicked.connect(lambda: navigate("exit"))
-
 
 class MainWindow(QtWidgets.QWidget):
     def __init__(self, *args, **kwargs):

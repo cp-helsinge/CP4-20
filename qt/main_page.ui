@@ -149,9 +149,9 @@ background-image: url('qt/boring.png');</string>
      <widget class="QLabel" name="version">
       <property name="geometry">
        <rect>
-        <x>800</x>
+        <x>880</x>
         <y>10</y>
-        <width>181</width>
+        <width>101</width>
         <height>21</height>
        </rect>
       </property>
