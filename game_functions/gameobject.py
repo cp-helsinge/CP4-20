@@ -8,6 +8,7 @@
 import pygame
 import math
 import random
+import os
 from game_functions import animation, object_types
 import config
 
@@ -19,6 +20,17 @@ class Gameobject:
     def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
       animation.Animation.__init__(self, name, frame_size, size, frame_rate, loop)
 
+  class Sound:
+    # NB: mixer some times fail om linux
+    # Make a dummy in case it failes
+    def play(self):
+        pass
+    def __init__(self, file_name):
+      try:
+        self = pygame.mixer.Sound(os.path.join(config.sound_path, file_name)) 
+      except:
+        print("Failed to load sound",file_name)
+        
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
     self.game_state = config.game_state
 

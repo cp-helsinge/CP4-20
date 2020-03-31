@@ -102,6 +102,9 @@ class Game(player_input.PlayerInput):
 
     # Set up game screen
     pygame.init()
+    if not pygame.mixer.get_init():
+      print("Failed to use pygame mixer")
+
 
     # Set up a canvas to paint the game on
     self.canvas = pygame.Surface((config.screen_width,config.screen_height))
