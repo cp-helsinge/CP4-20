@@ -20,18 +20,20 @@ class Gameobject:
     def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
       animation.Animation.__init__(self, name, frame_size, size, frame_rate, loop)
 
-  class Sound:
+  class Sound(pygame.mixer.Sound):
     # NB: mixer some times fail om linux
     def __init__(self, name):
       file_name = os.path.join(config.sound_path, name)
       try:
-        self = pygame.mixer.Sound(file_name) 
+        pygame.mixer.Sound.__init__(self,file_name)
       except:
         print("Failed to load sound",file_name)
  
     # Make a dummy in case it failes
     def play(self):
-      pass
+      try:
+        pygame.mixer.Sound.play(self)
+      except: pass  
 
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
     self.game_state = config.game_state
