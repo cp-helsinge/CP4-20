@@ -75,6 +75,7 @@ class Player(gameobject.Gameobject):
     # Fire, but only if  1 / fire_rate seconds has passed since last shot
     if self.game_state.key['fire'] and ( ( pygame.time.get_ticks() - self.last_shot ) > 1000 / self.fire_rate ):
       # Save stooting time
+      self.sound_shoot.play()
       self.last_shot = pygame.time.get_ticks()
       self.game_state.game_objects.add({
         'class_name': 'Shot',
@@ -83,7 +84,6 @@ class Player(gameobject.Gameobject):
         'speed': 5,
         'direction': 90
       })
-      self.sound_shoot.play()
 
   # When hit or hitting something
   def hit(self, obj):

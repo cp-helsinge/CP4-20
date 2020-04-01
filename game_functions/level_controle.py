@@ -79,10 +79,12 @@ class LevelControle:
     # Loop through list of game game_objects on this level
     for obj in story.level[self.game_state.level]:
       # Load pseudo classes
-      if obj['class_name'] == 'next_level':
+      if obj['class_name'] == 'NextLevel':
         self.add(**parameters)
-      elif obj['class_name'] == 'music': 
-        self.music = parameters
+      elif obj['class_name'] == 'Music': 
+        try: 
+          self.music = pygame.mixer.music.load(obj['file name']) 
+        except: pass  
       # Load in-game game_objectss  
       else:
         self.game_state.game_objects.add(obj)

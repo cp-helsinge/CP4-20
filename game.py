@@ -202,7 +202,7 @@ class Game(player_input.PlayerInput):
     # Play music  
     try:
       pygame.mixer.music.play(-1)
-    except Exception(err):
+    except Exception as err:
       print("Music playback failed:", err)  
 
     # Start using pygame loop timing (Frame rate)
@@ -299,7 +299,10 @@ class Game(player_input.PlayerInput):
       self.clock.tick( config.frame_rate * self.game_speed )
 
     #Pause music
-    pygame.mixer.music.pause()
+    try:
+      pygame.mixer.music.pause()
+    except: pass
+    
     self.exit()
 
     

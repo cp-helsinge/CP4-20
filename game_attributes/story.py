@@ -31,6 +31,7 @@ level.append( [] )
 
 # Level 1 =====================================================================
 level.append([
+  {'class_name': 'Music', 'file name': 'theme1.ogg'},
   {'class_name': 'Player', 'position': (500,500), 'boundary': (0,200,1000,460)},
   {'class_name': 'Alien1', 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 20},    
   {'class_name': 'Alien1', 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 160},    
@@ -47,7 +48,7 @@ level.append([
   'outtro_time'   : 1, 
   'outtro_effect' : 'slide_down'
 }, 
-{'class name': 'Music', 'file name': 'Test1.ogg'},
+
 { 
   'class name': 'Background', 
   'color': pygame.Color('dodgerblue1'), 
