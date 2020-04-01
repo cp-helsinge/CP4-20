@@ -55,7 +55,7 @@ class Animation:
     self.collection = []
     self.frames = 0
     self.animation_ended = None
-    self.frame_time = pygame.time.get_ticks()
+    self.frame_time = False
     self.rect = None
       
     # Load multiple image files as frames 
@@ -181,6 +181,9 @@ class Animation:
     if self.animation_ended:
       return self.collection[self.frames-1]
 
+    if not self.frame_time:
+      self.frame_time = pygame.time.get_ticks()
+      
     # Rotate frames based on ( time - begin_time ) * frame_rate / frames
     frame_changes = int(offset + (pygame.time.get_ticks() - self.frame_time) * self.frame_rate / 1000)
 

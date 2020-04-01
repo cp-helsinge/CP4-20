@@ -79,8 +79,8 @@ class GameObjects:
       obj = self.class_list[name](**descr) 
       self.list.append(obj)
     except Exception as err:
-      print("Error when creating game object", name, ": \"", err, "\"\n  Unable to create object with parameters:", obj_description)
-      print("Loaded classes are:", enumerate(self.class_list))
+      print("Error when creating game object", name, " with parameters:", obj_description)
+      print(err)
       sys.exit(1)  
 
 class Game(player_input.PlayerInput):
@@ -302,7 +302,7 @@ class Game(player_input.PlayerInput):
     try:
       pygame.mixer.music.pause()
     except: pass
-    
+
     self.exit()
 
     
