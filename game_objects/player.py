@@ -30,7 +30,7 @@ class Player(gameobject.Gameobject):
     if not Player.loaded:
       Player.size = (80,80)
       Player.sprite = self.Animate("a1a1_rocket2.png", (100,100), Player.size) # sprite map
-      Player.sound_shoot = self.Sound("photon_torpedo_nx01_launch")
+      Player.sound_shoot = self.Sound("photon_torpedo_nx01_launch.ogg")
       Player.loaded = True # Indicate that all common external attributes are loaded
 
     # Inherit from game object class

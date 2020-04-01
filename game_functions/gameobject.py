@@ -22,15 +22,17 @@ class Gameobject:
 
   class Sound:
     # NB: mixer some times fail om linux
-    # Make a dummy in case it failes
-    def play(self):
-        pass
-    def __init__(self, file_name):
+    def __init__(self, name):
+      file_name = os.path.join(config.sound_path, name)
       try:
-        self = pygame.mixer.Sound(os.path.join(config.sound_path, file_name)) 
+        self = pygame.mixer.Sound(file_name) 
       except:
         print("Failed to load sound",file_name)
-        
+ 
+    # Make a dummy in case it failes
+    def play(self):
+      pass
+
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
     self.game_state = config.game_state
 
