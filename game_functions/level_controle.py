@@ -20,11 +20,16 @@ class LevelControle:
     self.game_state = game_state
     self.music = False
     self.active = False
+    self.playout = False
 
   def check(self):
     # Player dead
     if self.game_state.count['player_items'] <= 0:
-      self.game_state.end_game.set()
+      # Let the game continue a little without player
+      if not self.playout:
+        self.playout = pygame.time.get_ticks()
+      elif pygame.time.get_ticks() > self.playout + 2000:
+        self.game_state.end_game.set()
 
     # Alens dead
     elif self.game_state.count['alien_items'] <= 0:
@@ -103,6 +108,8 @@ class LevelControle:
     if not self.game_state.player:
       print("Story board error in level", self.game_state.level," No player object!")
       sys.exit(1)
+
+    self.playout = False
    
   def next(self):
     self.set()

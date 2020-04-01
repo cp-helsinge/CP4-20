@@ -47,7 +47,8 @@ class Player(gameobject.Gameobject):
 
   # Draw on game surface
   def draw(self, surface):
-    surface.blit(self.sprite.get_surface(),self.rect)
+    if not self.inactive:
+      surface.blit(self.sprite.get_surface(),self.rect)
     
   # Movement
   def update(self, scroll):
@@ -92,6 +93,8 @@ class Player(gameobject.Gameobject):
       self.health -= max( obj.impact_power + self.armor, 0)
 
     if self.health <= 0:
-      self.inactive = True
-
       #Change sprite to wreck
+      # self.inactive = True
+      self.delete = True
+
+
