@@ -42,9 +42,6 @@ class Player(gameobject.Gameobject):
     # Set charakteristica other than default
     self.type = self.Type.PLAYER
     self.impact_power = 100
-    
-    # Reset player death animation
-    self.sprite_dying.frame_time = False
 
     # Make this object accessable to other objects
     self.game_state.player = self
@@ -53,6 +50,8 @@ class Player(gameobject.Gameobject):
   def draw(self, surface):
     if not self.inactive:
       surface.blit(self.sprite.get_surface(),self.rect)
+
+    #Change sprite to wreck
     else:      
       surface.blit(self.sprite_dying.get_surface(),self.rect)  
     
@@ -100,7 +99,8 @@ class Player(gameobject.Gameobject):
       self.health -= max( obj.impact_power + self.armor, 0)
 
     if self.health <= 0:
-      #Change sprite to wreck
+      # Reset player death animation
+      self.sprite_dying.frame_time = False
       self.inactive = True
       #self.delete = True
 
