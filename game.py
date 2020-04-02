@@ -11,6 +11,17 @@
 
   Game frame by Simon Rigét @ paragi 2019. License MIT
 
+
+pygame mixer issue for linux
+
+tried:
+
+apt-get install python-pygame
+sudo apt-get install libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
+sudo sdl-config --cflags --libs
+
+https://stackoverflow.com/questions/32533585/pygame-projects-wont-run-pygame-error-no-available-video-device
+
 ============================================================================"""
 # Import python modules
 import pygame
@@ -22,6 +33,8 @@ import glob
 import pprint
 from collections import defaultdict
 import config
+
+import os
 
 # Import game classes
 from game_functions import dashboard, player_input, level_controle, tech_screen, gameobject, end_game, object_types, common
@@ -102,8 +115,14 @@ class Game(player_input.PlayerInput):
 
     # Set up game screen
     pygame.init()
+
+
+    # start sound interface
     if not pygame.mixer.get_init():
-      print("Failed to use pygame mixer")
+      try:
+        pygame.mixer.init()
+      except Exception as err:
+        print("Error: Pygame Sound mixer failed to initialize",err)
 
 
     # Set up a canvas to paint the game on
@@ -115,13 +134,7 @@ class Game(player_input.PlayerInput):
     pygame.display.set_caption(game_name)
     pygame.mouse.set_visible(False)
 
-    # start sound interface
-    try:
-      pygame.mixer.init()
-    except:
-      print("Pygame Sound mixer failed to initialize")
-
-    # in game objects
+     # in game objects
     self.game_objects = GameObjects()
 
     # Create basic game interface
