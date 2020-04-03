@@ -26,7 +26,7 @@ class Shot(gameobject.Gameobject):
   def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
     # Load animations and sounds first time this class is used
     if not Shot.loaded:
-      Shot.sprite = self.Animate("photon_torpedo_NX01.png",(128,128),(50,50)) 
+      Shot.sprite = self.Animate("photon_torpedo_nx01.png",(128,128),(50,50)) 
       Shot.loaded = True # Indicate that all common external attributes are loaded
       Shot.count += 1
 
