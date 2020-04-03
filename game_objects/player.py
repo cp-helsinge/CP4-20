@@ -29,7 +29,7 @@ class Player(gameobject.Gameobject):
     # Load animations and sounds first time this class is used
     if not Player.loaded:
       Player.size = (80,80)
-      Player.sprite = self.Animate("a1a1_rocket2.png", (100,100), Player.size) # sprite map
+      Player.sprite = self.Animate("d1a1_rocket2.png", (100,100), Player.size,23) # sprite map
       Player.sprite_dying = self.Animate("a1a1_rocket2_dying.png", (100,100), Player.size,10,1) # sprite map
       #Player.sound_shoot = self.Sound("photon_torpedo_nx01_launch.ogg")
       Player.sound_shoot = self.Sound("shot.ogg")
