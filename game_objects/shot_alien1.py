@@ -59,5 +59,6 @@ class ShotAlien1(gameobject.Gameobject):
     self.move()
 
   # When hit or hitting something
-  def hit(self, object_type):
-    self.delete = True
+  def hit(self, obj):
+    if not obj.type == self.Type.UNFREINDLY:
+      self.delete = True

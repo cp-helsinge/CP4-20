@@ -32,6 +32,7 @@ import sys
 import glob
 import pprint
 from collections import defaultdict
+from game_functions import gameobject
 import config
 
 import os
@@ -88,13 +89,13 @@ class GameObjects:
     del descr['class_name']
 
     # Create the new object and add it to the list
-    try:
-      obj = self.class_list[name](**descr) 
-      self.list.append(obj)
-    except Exception as err:
-      print("Error when creating game object", name, " with parameters:", obj_description)
-      print(err)
-      sys.exit(1)  
+    #try:
+    obj = self.class_list[name](**descr) 
+    self.list.append(obj)
+    #except Exception as err:
+    #  print("Error when creating game object", name, " with parameters:", obj_description)
+    #  print(err)
+    #  sys.exit(1)  
 
 class Game(player_input.PlayerInput):
   class Type(object_types.ObjectType):
@@ -130,6 +131,8 @@ class Game(player_input.PlayerInput):
 
     # Set up the screen to match window size
     self.resize((config.screen_width,config.screen_height))
+    # Define the game screen area
+    self.rect = pygame.Rect(0,0,config.screen_width,config.screen_height) 
     
     pygame.display.set_caption(game_name)
     pygame.mouse.set_visible(False)
@@ -140,8 +143,6 @@ class Game(player_input.PlayerInput):
     # Create basic game interface
     self.dashboard = dashboard.Dashboard(self)
 
-    # Define the game screen area
-    self.rect = pygame.Rect(0,0,config.screen_width,config.screen_height - self.dashboard.rect[3]) 
     
     # Add functionality
     self.tech_screen = tech_screen.TechScreen(self)
@@ -228,8 +229,10 @@ class Game(player_input.PlayerInput):
       # Get player input
       self.update_player_input()
 
-      self.canvas.fill((0,0,70))
-      
+      #if type(self.background.sprite) is animation.Animate:
+      #  self.canvas.blit(self.background.surface())fill((0,0,70))
+      #else  
+
       # == move all objects ==
       scroll = (0,1)
 
@@ -242,13 +245,13 @@ class Game(player_input.PlayerInput):
         # Loop through all active objects
         for pos, obj1 in enumerate(self.game_objects.list):
           # Skip objects that are not active game objects
-          if obj1.delete or obj1.inactive: continue
+          if obj1.delete or obj1.inactive or obj1.type == gameobject.Gameobject.Type.NEUTRAL: continue
           # Loop through the rest of the list 
 
           for i in range(pos+1, len(self.game_objects.list) ):
             obj2 = self.game_objects.list[i]
             # Skip objects that are not active game objects
-            if  obj2.delete or obj2.inactive: continue
+            if obj2.delete or obj2.inactive or obj2.type == gameobject.Gameobject.Type.NEUTRAL: continue
 
             # Compare rectangles of objects
             if obj1.rect.colliderect(obj2.rect):
@@ -277,13 +280,6 @@ class Game(player_input.PlayerInput):
         # Check for level end
         self.level_controle.check()
    
-      else: 
-        # == Display level and end game graphics ==
-        if self.game_over:  
-          self.end_game.draw(self.canvas)
-        else:
-          self.level_controle.draw(self.canvas)
-
       # == Delete obsolite objects ==
       for game_obj in self.game_objects.list:
         # Remove deleted objects
@@ -297,6 +293,13 @@ class Game(player_input.PlayerInput):
         if callable(getattr(game_obj, 'draw', None)):
           game_obj.draw(self.canvas)
 
+      if self.suspended:
+        # == Display level and end game graphics ==
+        if self.game_over:  
+          self.end_game.draw(self.canvas)
+        else:
+          self.level_controle.draw(self.canvas)
+      
       # Draw tech screen
       if self.tech_screen_on:
         self.tech_screen.draw(self.canvas)

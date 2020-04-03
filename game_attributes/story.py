@@ -31,10 +31,23 @@ level.append( [] )
 
 # Level 1 =====================================================================
 level.append([
+  {'class_name': 'Background', 'color': pygame.Color('dodgerblue1'), 'file_name': 'sky2.jpg'},
   {'class_name': 'Music', 'file name': 'theme1.ogg'},
   {'class_name': 'Player', 'position': (500,500), 'boundary': (0,000,1000,700)},
-  {'class_name': 'Alien1', 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 20},    
-  {'class_name': 'Alien1', 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 160},    
+  {'class_name': 'AlienAlvin1', 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 20},    
+  {'class_name': 'AlienAlvin1', 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 160},   
+  {'class_name': 'City', 'position': (  10,580), }, 
+  {'class_name': 'City', 'position': ( 100,580), },
+  {'class_name': 'City', 'position': ( 190,580), },
+  {'class_name': 'City', 'position': ( 280,580), },
+  {'class_name': 'City', 'position': ( 370,580), },
+  {'class_name': 'City', 'position': ( 460,580), },
+  {'class_name': 'City', 'position': ( 550,580), },
+  {'class_name': 'City', 'position': ( 640,580), },
+  {'class_name': 'City', 'position': ( 730,580), },
+  {'class_name': 'City', 'position': ( 820,580), },
+  {'class_name': 'City', 'position': ( 910,580), },
+  {'class_name': 'City', 'position': (1000,580), },
 ])
 
 """
@@ -54,18 +67,18 @@ level.append([
   'color': pygame.Color('dodgerblue1'), 
   'sprite': 'sky2.jpg',
 },
-{'class_name': 'city', 'position': (  10,580), },
-{'class_name': 'city', 'position': ( 100,580), },
-{'class_name': 'city', 'position': ( 190,580), },
-{'class_name': 'city', 'position': ( 280,580), },
-{'class_name': 'city', 'position': ( 370,580), },
-{'class_name': 'city', 'position': ( 460,580), },
-{'class_name': 'city', 'position': ( 550,580), },
-{'class_name': 'city', 'position': ( 640,580), },
-{'class_name': 'city', 'position': ( 730,580), },
-{'class_name': 'city', 'position': ( 820,580), },
-{'class_name': 'city', 'position': ( 910,580), },
-{'class_name': 'city', 'position': (1000,580), },
+{'class_name': 'City', 'position': (  10,580), },
+{'class_name': 'City', 'position': ( 100,580), },
+{'class_name': 'City', 'position': ( 190,580), },
+{'class_name': 'City', 'position': ( 280,580), },
+{'class_name': 'City', 'position': ( 370,580), },
+{'class_name': 'City', 'position': ( 460,580), },
+{'class_name': 'City', 'position': ( 550,580), },
+{'class_name': 'City', 'position': ( 640,580), },
+{'class_name': 'City', 'position': ( 730,580), },
+{'class_name': 'City', 'position': ( 820,580), },
+{'class_name': 'City', 'position': ( 910,580), },
+{'class_name': 'City', 'position': (1000,580), },
 {'class_name': 'Player1', 'position': (500,500), 'boundary': (0,300,1000,360)},
 """
 
@@ -80,7 +93,7 @@ class Level2:
     background_sprite  = animation.Animate('sky3.jpg',( 0,0, setting.screen_width, setting.screen_height))
     player_sprite      = animation.Animate('a1a1_rocket2.png',(500,500,80,80))
     player_shot_sprite = animation.Animate('shot.png',(0,0,10,10))
-    city_sprite        = animation.Animate('city7.png',(10,580,80,80))
+    City_sprite        = animation.Animate('City7.png',(10,580,80,80))
     alien_sprite        = animation.Animate("ufo2.png",(0,0,100,50),5,-1,(0,0,100,50))
     alien_bomb_sprite  = animation.Animate('bomb.png',(0,0,40,40))
     alien_shot_sprite  = animation.Animate('alien_shot.png')
@@ -88,7 +101,7 @@ class Level2:
 
     player_dead_sound = common.load_sound('big_bang.wav')
     player_shot_sound = common.load_sound('shot.wav')
-    city_dead_sound   = common.load_sound('city_explosion.wav')
+    City_dead_sound   = common.load_sound('City_explosion.wav')
     alien_dead_sound  = common.load_sound('small_bang.wav')
     alien_shot_sound  = common.load_sound('small_shoot_sound.wav')
 
@@ -122,18 +135,18 @@ class Level2:
           'sound': player_shot_sound,
         },
       }},
-      {'city'         : { 'rect': (10,580,80,80),   'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (100,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (190,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (280,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (370,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (460,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (550,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},  
-      {'city'         : { 'rect': (640,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (730,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (820,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (910,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (1000,580,80,80), 'sprite': city_sprite, 'sound': city_dead_sound }},
+      {'City'         : { 'rect': (10,580,80,80),   'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (100,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (190,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (280,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (370,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (460,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (550,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},  
+      {'City'         : { 'rect': (640,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (730,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (820,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (910,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (1000,580,80,80), 'sprite': City_sprite, 'sound': City_dead_sound }},
       {'alien'        : {
         'rect'        : (200,30,100,50),
         'sprite'       : alien_sprite,
@@ -194,7 +207,7 @@ class Level3:
     background_sprite  = animation.Animate('sky4.jpg',( 0,0, setting.screen_width, setting.screen_height))
     player_sprite      = animation.Animate('a1a1_rocket2.png',(500,500,80,80))
     player_shot_sprite = animation.Animate('shot.png',(0,0,10,10))
-    city_sprite        = animation.Animate('city7.png',(10,580,80,80))
+    City_sprite        = animation.Animate('City7.png',(10,580,80,80))
     alien_sprite        = animation.Animate("ufo3.png",(0,0,100,50),5,-1,(0,0,100,50))
     alien_bomb_sprite  = animation.Animate('bomb.png',(0,0,40,40))
     alien_shot_sprite  = animation.Animate('alien_shot.png')
@@ -202,7 +215,7 @@ class Level3:
 
     player_dead_sound = common.load_sound('big_bang.wav')
     player_shot_sound = common.load_sound('shot.wav')
-    city_dead_sound   = common.load_sound('city_explosion.wav')
+    City_dead_sound   = common.load_sound('City_explosion.wav')
     alien_dead_sound  = common.load_sound('small_bang.wav')
     alien_shot_sound  = common.load_sound('small_shoot_sound.wav')
 
@@ -236,18 +249,18 @@ class Level3:
           'sound': player_shot_sound,
         },
       }},
-      {'city'         : { 'rect': (10,580,80,80),   'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (100,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (190,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (280,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (370,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (460,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (550,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},  
-      {'city'         : { 'rect': (640,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (730,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (820,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (910,580,80,80),  'sprite': city_sprite, 'sound': city_dead_sound }},
-      {'city'         : { 'rect': (1000,580,80,80), 'sprite': city_sprite, 'sound': city_dead_sound }},
+      {'City'         : { 'rect': (10,580,80,80),   'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (100,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (190,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (280,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (370,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (460,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (550,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},  
+      {'City'         : { 'rect': (640,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (730,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (820,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (910,580,80,80),  'sprite': City_sprite, 'sound': City_dead_sound }},
+      {'City'         : { 'rect': (1000,580,80,80), 'sprite': City_sprite, 'sound': City_dead_sound }},
       {'alien'        : {
         'rect'        : (800,30,100,50),
         'sprite'       : alien_sprite,

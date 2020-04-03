@@ -45,16 +45,17 @@ class Player(gameobject.Gameobject):
     self.impact_power = 100
 
     # Make this object accessable to other objects
-    self.game_state.player = self
+    self.game_state.player = self # !!!!!!!!!!
 
   # Draw on game surface
   def draw(self, surface):
-    if not self.inactive:
-      surface.blit(self.sprite.get_surface(),self.rect)
-
-    #Change sprite to wreck
-    else:      
+    if self.inactive:
+      # Show player to wreck sprite
       surface.blit(self.sprite_dying.get_surface(),self.rect)  
+
+    # Show player
+    else:      
+      surface.blit(self.sprite.get_surface(),self.rect)
     
   # Movement
   def update(self, scroll):
@@ -86,7 +87,7 @@ class Player(gameobject.Gameobject):
         self.sound_shoot.play()
         self.last_shot = pygame.time.get_ticks()
         self.game_state.game_objects.add({
-          'class_name': 'Shot',
+          'class_name': 'ShotPhotonTorpedoNx01',
           'position': self.rect.midtop,
           'boundary': None,
           'speed': 5,

@@ -27,6 +27,7 @@ class Dashboard:
     # Load dashboard animation
     self.sprite = animation.Animation("dashboard.png",(1000,50),self.rect.size,2,-1) 
     self.sprite_top = animation.Animation("dashboard_top.png",(1000,20)) 
+    self.game_state.rect = pygame.Rect(0,10,self.game_state.screen_width,self.game_state.screen_height-50)
     
     # Define a rectangle that contains the actual health bar
     self.health_bar_rect = pygame.Rect( (0,0), (self.rect.width // 5, height // 2) )

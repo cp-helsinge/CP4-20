@@ -37,7 +37,7 @@ class EndGame:
     else:  
       print("Game over")
       # Load text animation
-      self.background_sprite = animation.Animation("game_over_failed.png",(180,200),(400,360),10,1) 
+      self.background_sprite = animation.Animation("game_over_failed.png",(180,200),self.game_state.rect.size,10,1) 
       self.background_sprite.rect.center = self.game_state.rect.center
 
 

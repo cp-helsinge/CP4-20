@@ -41,11 +41,6 @@ import config
 class Animation:
   def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
     self.file_name = os.path.join(os.getcwd(),config.gfx_path, name)
-    if frame_size is None and size is not None:
-      frame_size =  size
-    if size is None and frame_size is not None:
-      size =  frame_size
-
     self.name = name
     self.frame_size = frame_size
     self.size = size
@@ -94,8 +89,11 @@ class Animation:
     while not done:
       try:
         image = pygame.image.load(self.file_name.format(index = index)).convert_alpha()
+        # Scale image to size
         if self.size is not None:
           image = pygame.transform.smoothscale(image, self.size)
+        else:
+          self.size = image.rect.size  
       except Exception as error:
         if index <= 0:
           print(error, "Image sequence not loaded. Using default image.")
@@ -122,10 +120,13 @@ class Animation:
     if self.frame_size is None:
       cols = 1
       rows = 1
-      self.frame_size = self.size =  rect.size
+      self.frame_size = rect.size
     else:
       cols = rect.width // self.frame_size[0]
       rows = rect.height // self.frame_size[1]
+
+    if self.size is None:
+      self.size =  self.frame_size
 
     for row in range(rows):
       for col in range(cols):
@@ -138,7 +139,7 @@ class Animation:
         clip.blit(image, (0,0), pygame.Rect((x,y),self.frame_size))
         
         # Scale clip and append it to the frame list
-        if self.size is not None and self.size != self.frame_size:
+        if self.size != self.frame_size:
           clip = pygame.transform.smoothscale(clip, self.size)
         frame_list.append(clip)
 
