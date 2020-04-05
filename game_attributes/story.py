@@ -27,7 +27,18 @@ level = []
 # This level is not used. However the next_level effect will be played, before 
 # the game begins.
 
-level.append( [] )
+level.append( [
+  {
+    'class_name': 'NextLevel',
+    'sound'         : 'level2.ogg',
+    'text'          : '<- -> or A D to move\n[Enter] [space] or mouse button right, to shoot',
+    'intro_time'    : 2, 
+    'intro_effect'  : 'slide_down', 
+    'hold_time'     : 2, 
+    'outtro_time'   : 1, 
+    'outtro_effect' : 'slide_down'
+  }
+] )
 
 # Level 1 =====================================================================
 level.append([
@@ -48,7 +59,40 @@ level.append([
   {'class_name': 'City', 'position': ( 820,580), },
   {'class_name': 'City', 'position': ( 910,580), },
   {'class_name': 'City', 'position': (1000,580), },
+  {
+    'class_name': 'NextLevel',
+    'sound'         : 'level2.ogg',
+    'text'          : '<- -> or A D to move\n[Enter] [space] or mouse button right, to shoot',
+    'intro_time'    : 2, 
+    'intro_effect'  : 'slide_down', 
+    'hold_time'     : 2, 
+    'outtro_time'   : 1, 
+    'outtro_effect' : 'slide_down'
+}, 
 ])
+
+# Level 2 =====================================================================
+level.append([
+  {'class_name': 'Background', 'color': pygame.Color('dodgerblue1'), 'file_name': 'sky3.jpg'},
+  {'class_name': 'Music', 'file name': 'theme1.ogg'},
+  {'class_name': 'Player', 'position': (500,500), 'boundary': (0,000,1000,700)},
+  {'class_name': 'AlienAlvin1', 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 0},    
+  {'class_name': 'AlienAlvin1', 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 80},   
+  {'class_name': 'AlienAlvin1', 'position': (400,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 150},    
+  {'class_name': 'City', 'position': (  10,580), }, 
+  {'class_name': 'City', 'position': ( 100,580), },
+  {'class_name': 'City', 'position': ( 190,580), },
+  {'class_name': 'City', 'position': ( 280,580), },
+  {'class_name': 'City', 'position': ( 370,580), },
+  {'class_name': 'City', 'position': ( 460,580), },
+  {'class_name': 'City', 'position': ( 550,580), },
+  {'class_name': 'City', 'position': ( 640,580), },
+  {'class_name': 'City', 'position': ( 730,580), },
+  {'class_name': 'City', 'position': ( 820,580), },
+  {'class_name': 'City', 'position': ( 910,580), },
+  {'class_name': 'City', 'position': (1000,580), },
+])
+
 
 """
 {

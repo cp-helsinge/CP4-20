@@ -78,23 +78,23 @@ class Gameobject:
   def mirror_direction(self):
     if self.touch_boundary():
       # Left and Right side
-      if self.rect.x == self.boundary.x or self.rect.x + self.rect.width == self.boundary.width:       
+      if self.rect.x == self.boundary.x or self.rect.x + self.rect.width == self.boundary.x + self.boundary.width:       
         self.direction = -self.direction + 180
       
       # bottom  and top
-      if self.rect.y == self.boundary.y or self.rect.y + self.rect.height == self.boundary.height:       
+      if self.rect.y == self.boundary.y or self.rect.y + self.rect.height == self.boundary.y + self.boundary.height:       
         self.direction = -self.direction 
       
       # reduce angle to 0-360 degrees
-      self.direction = (self.direction % 360) // 1  
+      self.direction = ((self.direction + 360 ) % 360) // 1  
       # Change to oposite direction
 
   def touch_boundary(self):
     touching = False
-    touching |= self.rect.x == self.boundary.x 
-    touching |= self.rect.y == self.boundary.y 
-    touching |= self.rect.x == self.boundary.width - self.rect.width 
-    touching |= self.rect.y == self.boundary.height - self.rect.height
+    touching |= self.rect.x <= self.boundary.x 
+    touching |= self.rect.y <= self.boundary.y 
+    touching |= self.rect.x + self.rect.width >= self.boundary.x + self.boundary.width 
+    touching |= self.rect.y + self.rect.height >= self.boundary.y + self.boundary.height 
     return touching
 
   # Return true at random, on avarage at <freq> times pr. second

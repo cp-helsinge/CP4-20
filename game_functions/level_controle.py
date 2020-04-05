@@ -10,7 +10,7 @@ import pygame
 import os
 import sys
 
-from game_functions import animation
+from game_functions import animation, audio
 from game_attributes import story
 
 import config
@@ -40,26 +40,22 @@ class LevelControle:
         self.game_state.end_game.set(True)
 
   def add(self, 
-    movie = False,
-    sprite = False, 
-    color = (0,0,0),
     intro_time = 2,
     intro_effect = False,  
     hold_time = 1, 
     outtro_time = 1,
     outtro_effect = False,
-    sound = False
+    sound = False,
+    text = None
   ):
-    self.movie = False
-    self.sprite = sprite
-    self.color = color
     self.intro_time = intro_time
     self.intro_effect = intro_effect
     self.hold_time = hold_time
     self.outtro_time = outtro_time
     self.outtro_effect = outtro_effect
-    self.active = True
-    self.sound = sound
+    self.text = text
+    self.active = False
+    self.sound = audio.Sound(sound)
 
   # Set a new game level
   def set(self, level = False):
@@ -85,6 +81,8 @@ class LevelControle:
     for obj in story.level[self.game_state.level]:
       # Load pseudo classes
       if obj['class_name'] == 'NextLevel':
+        parameters = obj.copy()
+        del parameters['class_name']
         self.add(**parameters)
       elif obj['class_name'] == 'Music': 
         try: 
