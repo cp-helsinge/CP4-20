@@ -10,9 +10,9 @@
 
 ============================================================================"""
 import pygame
-from game_functions import gameobject
+from game_functions.gameobject import *
 
-class ShotAlien1(gameobject.Gameobject):
+class ShotAlien1(Gameobject):
   # Variables to store animations and sounds common to all Shot object
   loaded = False
   sprite = None
@@ -23,12 +23,12 @@ class ShotAlien1(gameobject.Gameobject):
   def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
     # Load animations and sounds first time this class is used
     if not ShotAlien1.loaded:
-      ShotAlien1.sprite = self.Animate("shot_alien1.png") 
+      ShotAlien1.sprite = Animation("shot_alien1.png") 
       ShotAlien1.loaded = True # Indicate that all common external attributes are loaded
       ShotAlien1.count += 1
 
     # Inherit from game object class
-    gameobject.Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
+    Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
     
     # Adjust position to be centered under position
     self.rect.midtop = position

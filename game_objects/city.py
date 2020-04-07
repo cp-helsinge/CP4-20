@@ -10,9 +10,9 @@
 
 ============================================================================"""
 import pygame
-from game_functions import gameobject
+from game_functions.gameobject import *
 
-class City(gameobject.Gameobject):
+class City(Gameobject):
   # Variables to store animations and sounds common to all Shot object
   loaded = False
   sprite = None
@@ -23,12 +23,12 @@ class City(gameobject.Gameobject):
   def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
     # Load animations and sounds first time this class is used
     if not City.loaded:
-      City.sprite = self.Animate("city7.png",None,(80,80)) 
+      City.sprite = Animation("city7.png",None,(80,80)) 
       City.loaded = True # Indicate that all common external attributes are loaded
       City.count += 1
 
     # Inherit from game object class
-    gameobject.Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
+    Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
  
     # Set charakteristica other than default
     self.type = self.Type.FREINDLY

@@ -9,31 +9,16 @@ import pygame
 import math
 import random
 import os
-from game_functions import animation, object_types
+from game_functions.object_types import *
+from game_functions.animation import *
+from game_functions.audio import *
 import config
 
-class Gameobject:
-  class Type(object_types.ObjectType):
+class Gameobject(Animation, Sound):
+  class Type(ObjectType):
     pass
-  
-  class Animate(animation.Animation):
-    def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
-      animation.Animation.__init__(self, name, frame_size, size, frame_rate, loop)
 
-  class Sound(pygame.mixer.Sound):
-    # NB: mixer some times fail om linux
-    def __init__(self, name):
-      file_name = os.path.join(config.sound_path, name)
-      try:
-        pygame.mixer.Sound.__init__(self,file_name)
-      except:
-        print("Failed to load sound",file_name)
- 
-    # Make a dummy in case it failes
-    def play(self):
-      try:
-        pygame.mixer.Sound.play(self)
-      except: pass  
+  Animation = Animation
 
   def __init__(self, boundary = None, position=None, size=None, speed=1, direction=0):
     self.game_state = config.game_state

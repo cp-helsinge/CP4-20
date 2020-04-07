@@ -39,13 +39,22 @@ import pygame
 import config
 
 class Animation:
-  def __init__(self, name, frame_size = None, size = None, frame_rate = None, loop = -1):
+  def __init__(
+    self, 
+    name, 
+    frame_size = None, 
+    size = None, 
+    frame_rate = None, 
+    loop = -1,
+    angles = 1
+    ):
     self.file_name = os.path.join(os.getcwd(),config.gfx_path, name)
     self.name = name
     self.frame_size = frame_size
     self.size = size
     self.frame_rate = frame_rate
     self.loop = loop
+    self.angles = angles
 
     self.collection = []
     self.frames = 0
@@ -66,7 +75,8 @@ class Animation:
 
 
     # Set meta data
-    self.frames = len(self.collection)
+    self.frames = len(self.collection) // self.angles
+    print(self.frames, self.angles)
     if self.frames > 0:
       # Set animation size 
       if size is None:

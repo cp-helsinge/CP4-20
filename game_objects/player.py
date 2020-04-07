@@ -9,12 +9,12 @@
 
 ============================================================================"""
 import pygame
-from game_functions import gameobject
+from game_functions.gameobject import *
 import config
 
 fire_rate = 3
 
-class Player(gameobject.Gameobject):
+class Player(Gameobject):
   # Variables to store animations and sounds common to all Player object
   loaded = False
   sprite = None
@@ -29,14 +29,14 @@ class Player(gameobject.Gameobject):
     # Load animations and sounds first time this class is used
     if not Player.loaded:
       Player.size = (80,80)
-      Player.sprite = self.Animate("d1a1_rocket2.png", (100,100), Player.size,23) # sprite map
-      Player.sprite_dying = self.Animate("a1a1_rocket2_dying.png", (100,100), Player.size,10,1) # sprite map
+      Player.sprite = Animation("d1a1_rocket2.png", (100,100), Player.size,23) # sprite map
+      Player.sprite_dying = Animation("a1a1_rocket2_dying.png", (100,100), Player.size,10,1) # sprite map
       #Player.sound_shoot = self.Sound("photon_torpedo_nx01_launch.ogg")
-      Player.sound_shoot = self.Sound("shot.ogg")
+      Player.sound_shoot = Sound("shot.ogg")
       Player.loaded = True # Indicate that all common external attributes are loaded
 
     # Inherit from game object class
-    gameobject.Gameobject.__init__(self, boundary, position, self.sprite.size, speed)
+    Gameobject.__init__(self, boundary, position, self.sprite.size, speed)
     self.fire_rate = fire_rate
     self.last_shot = 0
 

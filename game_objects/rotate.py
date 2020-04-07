@@ -14,8 +14,8 @@ import pygame
 import math
 from game_functions.gameobject import *
 
-class AlienAlvin1(Gameobject):
-  # Variables to store animations and sounds common to all AlienAlvin1 object
+class Rotate(Gameobject):
+  # Variables to store animations and sounds common to all Rotate object
   loaded = False
   sprite = None
   sprit_bomb = None
@@ -24,19 +24,19 @@ class AlienAlvin1(Gameobject):
   sound_shoot = None
   count = 0
 
-  # === Initialize AlienAlvin1 ===
+  # === Initialize Rotate ===
   def __init__(self, boundary = None, position = None, direction = 0, speed = 1, delay = 0):
     print("init alien")
     # Load animations and sounds first time this class is used
-    if not AlienAlvin1.loaded:
+    if not Rotate.loaded:
       # Run this the first time this class is used
-      AlienAlvin1.size = (100,50)
-      AlienAlvin1.sprite = self.Animation("ufo1-{index}.png", (100,50), AlienAlvin1.size) # Alien sprite map
-      AlienAlvin1.loaded = True # Indicate that all common external attributes are loaded
+      Rotate.size = (100,100)
+      Rotate.sprite = Animation("rotate_test.png", (100,100), (100,100), 2, -1, 2) # Alien sprite map
+      Rotate.loaded = True # Indicate that all common external attributes are loaded
 
     # Get a animation offset that animation of the same class, looks different
-    self.animation_offset = AlienAlvin1.count
-    AlienAlvin1.count += 1
+    self.animation_offset = Rotate.count
+    Rotate.count += 1
 
     # Inherit from game object class
     Gameobject.__init__(self, boundary, position, self.sprite.size, speed, direction)
@@ -74,20 +74,7 @@ class AlienAlvin1(Gameobject):
     # Move sprite according to speed and direction
     self.move()
 
-    # Shoot at player at random interval
-    if self.random_frequency(0.1):
-      # Direct shot at player
-      target = self.game_state.player.rect.center
-
-      # Place shot under alien ship
-      self.game_state.game_objects.add({
-        'class_name': 'ShotAlien1',
-        'position': self.rect.midbottom,
-        'boundary': None,
-        'speed': 5,
-        'direction': math.degrees(math.atan2( target[0] - self.rect.x, target[1] - self.rect.y )) -90
-      })
-
+    
   # === Draw on game surface ===
   def draw(self, surface):
     if self.invisible:
