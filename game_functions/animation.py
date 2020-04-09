@@ -27,6 +27,17 @@ parameters:
                 -1 = loop forever
                 n > 1 = number of loops performed, ending with the last image.
 
+* Angles      If the animation set contains the figure from differant angles of
+              orientation, this number is greater than 1 (default)
+              It is assumed that the angled images represent the figure from 
+              angles between 0 and 90 degrees (Last set being 90 degree)
+              anything in between, will be the nearest angle, rotated to fit.
+              90 - 180 degrees is vertically fliped version.
+              180 - 270 degrees is fliped both vertically and horisontal
+              270 -360 degrees is fliped horisontaly
+
+
+
 * = optional
 
 This class can be used for images, that are not part of an animation. Just 
@@ -61,6 +72,7 @@ class Animation:
     self.animation_ended = None
     self.frame_time = False
     self.rect = None
+    self.orientation = 0
       
     # Load multiple image files as frames 
     if "{index}" in name: 
@@ -75,8 +87,13 @@ class Animation:
 
 
     # Set meta data
-    self.frames = len(self.collection) // self.angles
-    print(self.frames, self.angles)
+    self.frames = len(self.collection) // self.angles 
+    if self.angles > self.frames: 
+      self.angles = self.frames
+    # Find degrees between frame sets
+    self.angle_step = 90 // (self.angles) 
+
+
     if self.frames > 0:
       # Set animation size 
       if size is None:
@@ -89,7 +106,69 @@ class Animation:
       # Set default frame rate to all frames in one second   
       if frame_rate is None: 
         self.frame_rate = self.frames
+
+
     
+  # return a pointer to the current surface frame of this animation
+  def get_surface(self, offset=0):
+    # if there is no image, return immediately½½½
+    if len(self.collection) < 1: 
+      return None
+
+    # Find the image to return
+    # Still image
+    if self.loop == 0:
+      surface_index = 0
+
+    # Animation has ended
+    elif self.animation_ended:
+      surface_index = self.frames-1
+
+    else:
+      # Start animation 
+      if not self.frame_time:
+        self.frame_time = pygame.time.get_ticks()
+        
+      # select frames based on ( time - begin_time ) * frame_rate / frames
+      frame_changes = int(offset + (pygame.time.get_ticks() - self.frame_time) * self.frame_rate / 1000)
+
+      # Stop animation
+      if self.loop > 0 and frame_changes / self.frames >= self.loop:
+        self.animation_ended = True
+        surface_index = self.frames-1
+
+      # Animate
+      else:
+        surface_index = frame_changes % self.frames
+
+    # Set orientation
+    if not self.orientation == 0:
+      # limit orientation within 0-360 degrees
+      self.orientation = (self.orientation % 360 + 360) % 360
+      # Determin which quadrant of the unity circle  (1=0-90, 2=90-180 ...)
+      quadrant =  ( self.orientation // 90 ) +1 
+      # Mirror orientation angle to 1st. quadrant
+      rotate = self.orientation % 90
+      if quadrant == 2 or quadrant == 4:
+          rotate = 90 - rotate
+      # Find the frame set that fits orientatin best 
+      frame_set = int( rotate / self.angle_step + 0.5 )
+      if frame_set >= self.angles:
+        frame_set = self.angles -1
+      surface_index += self.frames * frame_set // self.angles
+      # Adjust rotation to frame_set
+      rotate = rotate - self.angle_step * frame_set
+      # Flip into quadrant 
+      flip_y_axis = ( quadrant == 2 or quadrant == 3)
+      flip_x_axis = ( quadrant == 3 or quadrant == 4)
+
+      # transform image
+      surface = pygame.transform.rotate(self.collection[surface_index], rotate)
+      surface = pygame.transform.flip(surface, flip_y_axis, flip_x_axis)
+      surface = pygame.transform.smoothscale(surface, self.rect.size)
+      return surface
+
+    return self.collection[surface_index]
 
   # Load one or multiple image files as frames
   def __load_image_sequence(self, name):
@@ -180,29 +259,5 @@ class Animation:
     image.blit( text, text_rect )
     return image
   
-  # return a pointer to the current surface frame of this animation
-  def get_surface(self, offset=0):
-    if len(self.collection) < 1: return None
 
-    # Still
-    if self.loop == 0:
-      return self.collection[0]
-
-    # Animation has ended
-    if self.animation_ended:
-      return self.collection[self.frames-1]
-
-    if not self.frame_time:
-      self.frame_time = pygame.time.get_ticks()
-      
-    # Rotate frames based on ( time - begin_time ) * frame_rate / frames
-    frame_changes = int(offset + (pygame.time.get_ticks() - self.frame_time) * self.frame_rate / 1000)
-
-    # Stop animation
-    if self.loop > 0 and frame_changes / self.frames >= self.loop:
-      self.animation_ended = True
-      return self.collection[self.frames-1]
-
-    # Animate
-    return self.collection[frame_changes % self.frames]
 

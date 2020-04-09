@@ -14,8 +14,8 @@ import pygame
 import math
 from game_functions.gameobject import *
 
-class Rotate(Gameobject):
-  # Variables to store animations and sounds common to all Rotate object
+class AlienBoss(Gameobject):
+  # Variables to store animations and sounds common to all AlienBoss object
   loaded = False
   sprite = None
   sprit_bomb = None
@@ -24,25 +24,27 @@ class Rotate(Gameobject):
   sound_shoot = None
   count = 0
 
-  # === Initialize Rotate ===
+  # === Initialize AlienBoss ===
   def __init__(self, boundary = None, position = None, direction = 0, speed = 1, delay = 0):
-    print("init alien")
+    print("init AlienBoss")
     # Load animations and sounds first time this class is used
-    if not Rotate.loaded:
+    if not AlienBoss.loaded:
       # Run this the first time this class is used
-      Rotate.size = (100,100)
-      Rotate.sprite = Animation("rotate_test.png", (100,100), (100,100), 2, -1, 2) # Alien sprite map
-      Rotate.loaded = True # Indicate that all common external attributes are loaded
+      AlienBoss.size = (100,100)
+      # AlienBoss.sprite = Animation("alien6.png", (100,100), (100,100), 2, -1, 2) # Alien sprite map
+      AlienBoss.sprite = Animation("alien6a.png",(242,242),(100,100)) # Alien sprite map
+
+      AlienBoss.loaded = True # Indicate that all common external attributes are loaded
 
     # Get a animation offset that animation of the same class, looks different
-    self.animation_offset = Rotate.count
-    Rotate.count += 1
+    self.animation_offset = AlienBoss.count
+    AlienBoss.count += 1
 
     # Inherit from game object class
     Gameobject.__init__(self, boundary, position, self.sprite.size, speed, direction)
 
     # Set charakteristica other than default
-    self.type = self.Type.CG_OPPONENT
+    self.type = self.Type.CGO
     self.impact_power = 50
 
     # Delayed deployment
@@ -51,7 +53,6 @@ class Rotate(Gameobject):
       self.invisible = True
     else:  
       self.invisible = False
-
 
   # === Movement ===
   def update(self, scroll):
@@ -70,7 +71,8 @@ class Rotate(Gameobject):
       self.mirror_direction()
 
     # Move in circles
-    self.direction += 3
+    self.sprite.orientation = self.direction
+
     # Move sprite according to speed and direction
     self.move()
 
@@ -80,11 +82,7 @@ class Rotate(Gameobject):
     if self.invisible:
       return
 
-    # Flip image when direction is left
-    if self.direction > 90 and self.direction < 270 :
-      surface.blit(pygame.transform.flip(self.sprite.get_surface(self.animation_offset),True,False),self.rect)
-    else:  
-      surface.blit(self.sprite.get_surface(self.animation_offset),self.rect)
+    surface.blit(self.sprite.get_surface(self.animation_offset),self.rect)
 
     # Draw healt bar  
     if self.health > 0:
@@ -101,7 +99,7 @@ class Rotate(Gameobject):
     if self.invisible:
       return 
     if obj.type == self.Type.PLAYER or obj.type == self.Type.FREINDLY:
-      print("Alien hit by",obj.__class__.__name__)
+      #print("Alien hit by",obj.__class__.__name__)
       self.health -= obj.impact_power
 
     # Check if i'm dead

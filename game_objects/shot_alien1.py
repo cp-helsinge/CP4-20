@@ -35,7 +35,7 @@ class ShotAlien1(Gameobject):
     self.speed += 10
 
     # Set charakteristica other than default
-    self.type = self.Type.CG_OPPONENT
+    self.type = self.Type.UNFREINDLY
     self.impact_power = 10
     self.health = 1
 
@@ -60,5 +60,5 @@ class ShotAlien1(Gameobject):
 
   # When hit or hitting something
   def hit(self, obj):
-    if not obj.type == self.Type.UNFREINDLY:
+    if not obj.type == self.Type.UNFREINDLY and not obj.type == self.Type.CGO:
       self.delete = True

@@ -274,7 +274,7 @@ class Game(player_input.PlayerInput):
           if game_obj.type == self.Type.PLAYER:
             self.count['player_items'] += 1
 
-          if game_obj.type == self.Type.CG_OPPONENT:
+          if game_obj.type == self.Type.CGO:
             self.count['alien_items'] += 1
         
         # Check for level end
@@ -312,7 +312,7 @@ class Game(player_input.PlayerInput):
       pygame.display.flip() 
 
       # Calculate timing and wait until frame rate is right
-      self.clock.tick( config.frame_rate * self.game_speed )
+      self.clock.tick( self.frame_rate * self.game_speed )
 
     #Pause music
     try:

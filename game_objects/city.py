@@ -49,7 +49,7 @@ class City(Gameobject):
 
   # When hit or hitting something
   def hit(self, obj):
-    if obj.type == self.Type.CG_OPPONENT:
+    if obj.type == self.Type.UNFREINDLY or obj.type == self.Type.CGO:
       self.health -= max( obj.impact_power + self.armor, 0)
 
     if self.health <= 0:

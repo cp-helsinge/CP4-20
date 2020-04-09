@@ -42,7 +42,7 @@ class AlienAlvin1(Gameobject):
     Gameobject.__init__(self, boundary, position, self.sprite.size, speed, direction)
 
     # Set charakteristica other than default
-    self.type = self.Type.CG_OPPONENT
+    self.type = self.Type.CGO
     self.impact_power = 50
 
     # Delayed deployment
@@ -94,10 +94,7 @@ class AlienAlvin1(Gameobject):
       return
 
     # Flip image when direction is left
-    if self.direction > 90 and self.direction < 270 :
-      surface.blit(pygame.transform.flip(self.sprite.get_surface(self.animation_offset),True,False),self.rect)
-    else:  
-      surface.blit(self.sprite.get_surface(self.animation_offset),self.rect)
+    surface.blit(self.sprite.get_surface(self.animation_offset),self.rect)
 
     # Draw healt bar  
     if self.health > 0:
@@ -114,7 +111,7 @@ class AlienAlvin1(Gameobject):
     if self.invisible:
       return 
     if obj.type == self.Type.PLAYER or obj.type == self.Type.FREINDLY:
-      print("Alien hit by",obj.__class__.__name__)
+      #print("Alien hit by",obj.__class__.__name__)
       self.health -= obj.impact_power
 
     # Check if i'm dead
