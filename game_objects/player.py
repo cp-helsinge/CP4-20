@@ -97,7 +97,7 @@ class Player(Gameobject):
   # When hit or hitting something
   def hit(self, obj):
     print("I was hit by",obj.type,obj.__class__.__name__,obj.impact_power)
-    if obj.type == self.Type.CGO:
+    if obj.type == self.Type.CGO or obj.type == self.Type.UNFREINDLY:
       self.health -= max( obj.impact_power + self.armor, 0)
 
     if self.health <= 0:

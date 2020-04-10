@@ -26,7 +26,7 @@ class AlienBoss(Gameobject):
 
   # === Initialize AlienBoss ===
   def __init__(self, boundary = None, position = None, direction = 0, speed = 1, delay = 0):
-    print("init AlienBoss")
+    print("init", self.__class__.__name__)
     # Load animations and sounds first time this class is used
     if not AlienBoss.loaded:
       # Run this the first time this class is used
@@ -70,11 +70,25 @@ class AlienBoss(Gameobject):
     if self.touch_boundary():
       self.mirror_direction()
 
+    # Change direction  
+    elif self.random_frequency(1):
+      self.direction += 90  
+
     # Move in circles
     self.sprite.orientation = self.direction
 
     # Move sprite according to speed and direction
     self.move()
+
+    if self.random_frequency(1):
+      # Place shot under alien ship
+      self.game_state.game_objects.add({
+        'class_name': 'AlienBomb1',
+        'position': self.rect.midbottom,
+        'boundary': None,
+        'speed': 2,
+        'direction': 270
+      })
 
     
   # === Draw on game surface ===

@@ -81,7 +81,7 @@ class AlienAlvin1(Gameobject):
 
       # Place shot under alien ship
       self.game_state.game_objects.add({
-        'class_name': 'ShotAlien1',
+        'class_name': 'AlienShot1',
         'position': self.rect.midbottom,
         'boundary': None,
         'speed': 5,

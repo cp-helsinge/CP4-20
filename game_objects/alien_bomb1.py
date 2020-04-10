@@ -1,6 +1,6 @@
 """============================================================================
 
-  Shot
+  Alien bomb
 
   parameters:
     boundery  : boundary of movement
@@ -12,7 +12,7 @@
 import pygame
 from game_functions.gameobject import *
 
-class ShotAlien1(Gameobject):
+class AlienBomb1(Gameobject):
   # Variables to store animations and sounds common to all Shot object
   loaded = False
   sprite = None
@@ -22,29 +22,29 @@ class ShotAlien1(Gameobject):
   # Initialize Shot 
   def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
     # Load animations and sounds first time this class is used
-    if not ShotAlien1.loaded:
-      ShotAlien1.sprite = Animation("shot_alien1.png") 
-      ShotAlien1.loaded = True # Indicate that all common external attributes are loaded
-      ShotAlien1.count += 1
+    if not AlienBomb1.loaded:
+      AlienBomb1.sprite = Animation("alien_bomb1.png",(50,50)) 
+      AlienBomb1.loaded = True # Indicate that all common external attributes are loaded
+      AlienBomb1.count += 1
 
     # Inherit from game object class
     Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
     
     # Adjust position to be centered under position
     self.rect.midtop = position
-    self.speed += 10
+    self.speed += 3
 
     # Set charakteristica other than default
     self.type = self.Type.UNFREINDLY
-    self.impact_power = 10
+    self.impact_power = 50
     self.health = 1
 
   def __del__(self):
-    ShotAlien1.count -= 1
+    AlienBomb1.count -= 1
 
   # Draw on game surface
   def draw(self, surface):
-    surface.blit(self.sprite.get_surface(ShotAlien1.count),self.rect)
+    surface.blit(self.sprite.get_surface(AlienBomb1.count),self.rect)
     
   # Movement
   def update(self, scroll):
