@@ -117,7 +117,9 @@ class Game(player_input.PlayerInput):
 
     # Set up game screen
     pygame.init()
-
+    # Set up the screen to match window size
+    #self.resize((config.screen_width,config.screen_height))
+    self.maximise()
 
     # start sound interface
     if not pygame.mixer.get_init():
@@ -129,10 +131,6 @@ class Game(player_input.PlayerInput):
 
     # Set up a canvas to paint the game on
     self.canvas = pygame.Surface((config.screen_width,config.screen_height))
-
-    # Set up the screen to match window size
-    #self.resize((config.screen_width,config.screen_height))
-    self.maximise()
 
     # Define the game screen area
     self.rect = pygame.Rect(0,0,config.screen_width,config.screen_height) 
@@ -188,8 +186,6 @@ class Game(player_input.PlayerInput):
     print("Resizing to:", size)
     
   def maximise(self):
-    self.resize()
-    return
     # Pygame does not support this
     # pygame.display.Info() is rather useless. Use Marcin Kurczewski's screeninfo 
 
@@ -222,7 +218,10 @@ class Game(player_input.PlayerInput):
 
   def toggle_fullscreen(self):
     self.fullscreen = not self.fullscreen
-    if self.fullscreen == 42: # Not working properly
+    if self.fullscreen : 
+      self.maximise()
+      return
+      # === Not working properly 
       if pygame.display.get_driver()=='x11c':
         pygame.display.toggle_fullscreen()
       else:
@@ -246,7 +245,7 @@ class Game(player_input.PlayerInput):
 
   # This is the main game loop
   def loop(self):
-    #self.resize()
+    self.maximise()
     self.reset_player_input()
 
     # Play music  

@@ -7,6 +7,7 @@
 ============================================================================"""
 import pygame
 from game_functions import animation
+import config
 
 # Settings
 background_color = (16,64,96)
@@ -21,13 +22,13 @@ class Dashboard:
     self.game_state = game_state
 
     # Set dashboard dimensions
-    height = self.game_state.screen_height // 15
-    self.rect = pygame.Rect(0, game_state.screen_height - height, game_state.screen_width, height)
-    print("dashboard rect", self.rect)
+    height = config.screen_height // 15
+    self.rect = pygame.Rect(0, config.screen_height - height, config.screen_width, height)
+
     # Load dashboard animation
     self.sprite = animation.Animation("dashboard.png",(1000,50),self.rect.size,2,-1) 
     self.sprite_top = animation.Animation("dashboard_top.png",(1000,20)) 
-    self.game_state.rect = pygame.Rect(0,10,self.game_state.screen_width,self.game_state.screen_height-50)
+    self.game_state.rect = pygame.Rect(0,10,config.screen_width,config.screen_height-50)
     
     # Define a rectangle that contains the actual health bar
     self.health_bar_rect = pygame.Rect( (0,0), (self.rect.width // 5, height // 2) )
