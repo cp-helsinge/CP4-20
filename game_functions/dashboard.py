@@ -23,7 +23,7 @@ class Dashboard:
     # Set dashboard dimensions
     height = self.game_state.screen_height // 15
     self.rect = pygame.Rect(0, game_state.screen_height - height, game_state.screen_width, height)
-
+    print("dashboard rect", self.rect)
     # Load dashboard animation
     self.sprite = animation.Animation("dashboard.png",(1000,50),self.rect.size,2,-1) 
     self.sprite_top = animation.Animation("dashboard_top.png",(1000,20)) 

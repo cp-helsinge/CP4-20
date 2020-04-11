@@ -41,6 +41,7 @@ level.append( [
 ] )
 
 # Level 1 =====================================================================
+# Learn to play and feel a success
 level.append([
   {'class_name': 'Background', 'color': pygame.Color('dodgerblue1'), 'file_name': 'sky2.jpg'},
   {'class_name': 'Music', 'file name': 'theme1.ogg'},
@@ -48,8 +49,7 @@ level.append([
   {'class_name': 'AlienAlvin1', 'delay': 1, 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 20},    
   {'class_name': 'AlienAlvin1', 'delay': 6, 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 160},   
   {'class_name': 'AlienAlvin1', 'delay': 20, 'position': (700,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 20},    
-  {'class_name': 'AlienAlvin1', 'delay': 25, 'position': (300,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 160},   
-  {'class_name': 'AlienAlvin1', 'delay': 28, 'position': (400,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 20},    
+  {'class_name': 'AlienSimon1', 'delay': 30, 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 270},  
   {'class_name': 'City', 'position': (  10,580), }, 
   {'class_name': 'City', 'position': ( 100,580), },
   {'class_name': 'City', 'position': ( 190,580), },
@@ -75,17 +75,18 @@ level.append([
 ])
 
 # Level 2 =====================================================================
+# devious deployment of aliens
 level.append([
   {'class_name': 'Background', 'color': pygame.Color('dodgerblue1'), 'file_name': 'sky3.jpg'},
   {'class_name': 'Music', 'file name': 'theme1.ogg'},
   {'class_name': 'Player', 'position': (500,500), 'boundary': (0,000,1000,700)},
   {'class_name': 'AlienAlvin1','delay': 1, 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 0},    
-  {'class_name': 'AlienAlvin1','delay': 2, 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 80},   
-  {'class_name': 'AlienAlvin1','delay': 7,'position': (400,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 150},    
-  {'class_name': 'AlienAlvin1','delay': 21, 'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 0},    
-  {'class_name': 'AlienAlvin1','delay': 22, 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 80},   
-  {'class_name': 'AlienAlvin1','delay': 27,'position': (400,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 150},    
-  {'class_name': 'AlienBoss', 'delay': 45, 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 270},   
+  {'class_name': 'AlienAlvin1','delay': 3, 'position': (100,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 80},   
+  {'class_name': 'AlienAlvin1','delay': 4, 'position': (200,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 150},    
+  {'class_name': 'AlienAlvin1','delay': 21, 'position': (100,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 0},    
+  {'class_name': 'AlienAlvin1','delay': 22, 'position': (700,90), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 80},   
+  {'class_name': 'AlienAlvin1','delay': 23,'position': (800,30), 'boundary': (0,0,1000,300), 'speed': 5,'direction': 150},    
+ 
   {'class_name': 'City', 'position': (  10,580), }, 
   {'class_name': 'City', 'position': ( 100,580), },
   {'class_name': 'City', 'position': ( 190,580), },

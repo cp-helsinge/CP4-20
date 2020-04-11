@@ -33,6 +33,7 @@ import glob
 import pprint
 from collections import defaultdict
 from game_functions import gameobject
+import screeninfo
 import config
 
 import os
@@ -130,7 +131,9 @@ class Game(player_input.PlayerInput):
     self.canvas = pygame.Surface((config.screen_width,config.screen_height))
 
     # Set up the screen to match window size
-    self.resize((config.screen_width,config.screen_height))
+    #self.resize((config.screen_width,config.screen_height))
+    self.maximise()
+
     # Define the game screen area
     self.rect = pygame.Rect(0,0,config.screen_width,config.screen_height) 
     
@@ -173,16 +176,49 @@ class Game(player_input.PlayerInput):
     # Maintain aspect ratio
     aspect_ratio = config.screen_width / config.screen_height
     # Too wide
-    if size[0] / size[1] > config.screen_width / config.screen_height:
+    if size[0] / size[1] > aspect_ratio:
       size[0] = int(size[1] * aspect_ratio)
 
     # Too tall
-    elif size[0] / size[1] < config.screen_width / config.screen_height:    
+    elif size[0] / size[1] < aspect_ratio:    
       size[1] = int(size[0] / aspect_ratio)
 
     self.screen = pygame.display.set_mode(  size , pygame.RESIZABLE )  # RESIZABLE | SCALED | FULLSCREEN | HWSURFACE | DOUBLEBUF
     self.screen_width, self.screen_height = size
     print("Resizing to:", size)
+    
+  def maximise(self):
+    self.resize()
+    return
+    # Pygame does not support this
+    # pygame.display.Info() is rather useless. Use Marcin Kurczewski's screeninfo 
+
+    # Find which monitor to use. Assume using the largest screen in physical size
+    monitor_list = screeninfo.get_monitors()
+    physical_size = 0
+    for m in monitor_list:
+      if physical_size < m.width_mm + m.height_mm:  
+        physical_size = m.width_mm + m.height_mm  
+        monitor = m
+
+    # Reduce size to allow for top bar etc.
+    # Guess the size. 5% ?
+    size = [int(monitor.width * 0.94), int(monitor.height * 0.94)]
+    #size = [config.screen_width,config.screen_height]
+    # Maintain aspect ratio
+    aspect_ratio = config.screen_width / config.screen_height
+
+    # Too wide
+    if size[0] / size[1] > aspect_ratio:
+      size[0] = int(size[1] * aspect_ratio)
+
+    # Too tall
+    elif size[0] / size[1] < aspect_ratio:    
+      size[1] = int(size[0] / aspect_ratio)
+
+    self.screen = pygame.display.set_mode(  size , pygame.RESIZABLE )  # RESIZABLE | SCALED | FULLSCREEN | HWSURFACE | DOUBLEBUF
+    self.screen_width, self.screen_height = size  
+    print("Maximising to:", size)
 
   def toggle_fullscreen(self):
     self.fullscreen = not self.fullscreen
@@ -210,7 +246,7 @@ class Game(player_input.PlayerInput):
 
   # This is the main game loop
   def loop(self):
-    self.resize()
+    #self.resize()
     self.reset_player_input()
 
     # Play music  

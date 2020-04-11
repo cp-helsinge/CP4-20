@@ -60,5 +60,6 @@ class AlienBomb1(Gameobject):
 
   # When hit or hitting something
   def hit(self, obj):
-    if not obj.type == self.Type.UNFREINDLY and not obj.type == self.Type.CGO:
+    if obj.type == self.Type.PLAYER or obj.type == self.Type.FREINDLY:
+      self.game_state.score += 10
       self.delete = True

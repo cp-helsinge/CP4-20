@@ -14,8 +14,8 @@ import pygame
 import math
 from game_functions.gameobject import *
 
-class AlienBoss(Gameobject):
-  # Variables to store animations and sounds common to all AlienBoss object
+class AlienSimon1(Gameobject):
+  # Variables to store animations and sounds common to all AlienSimon1 object
   loaded = False
   sprite = None
   sprit_bomb = None
@@ -24,21 +24,21 @@ class AlienBoss(Gameobject):
   sound_shoot = None
   count = 0
 
-  # === Initialize AlienBoss ===
+  # === Initialize AlienSimon1 ===
   def __init__(self, boundary = None, position = None, direction = 0, speed = 1, delay = 0):
     print("init", self.__class__.__name__)
     # Load animations and sounds first time this class is used
-    if not AlienBoss.loaded:
+    if not AlienSimon1.loaded:
       # Run this the first time this class is used
-      AlienBoss.size = (100,100)
-      # AlienBoss.sprite = Animation("alien6.png", (100,100), (100,100), 2, -1, 2) # Alien sprite map
-      AlienBoss.sprite = Animation("alien6a.png",(242,242),(100,100)) # Alien sprite map
+      AlienSimon1.size = (100,100)
+      # AlienSimon1.sprite = Animation("alien6.png", (100,100), (100,100), 2, -1, 2) # Alien sprite map
+      AlienSimon1.sprite = Animation("alien6a.png",(242,242),(100,100)) # Alien sprite map
 
-      AlienBoss.loaded = True # Indicate that all common external attributes are loaded
+      AlienSimon1.loaded = True # Indicate that all common external attributes are loaded
 
     # Get a animation offset that animation of the same class, looks different
-    self.animation_offset = AlienBoss.count
-    AlienBoss.count += 1
+    self.animation_offset = AlienSimon1.count
+    AlienSimon1.count += 1
 
     # Inherit from game object class
     Gameobject.__init__(self, boundary, position, self.sprite.size, speed, direction)
@@ -80,7 +80,7 @@ class AlienBoss(Gameobject):
     # Move sprite according to speed and direction
     self.move()
 
-    if self.random_frequency(1):
+    if self.random_frequency(0.8):
       # Place shot under alien ship
       self.game_state.game_objects.add({
         'class_name': 'AlienBomb1',
@@ -119,4 +119,4 @@ class AlienBoss(Gameobject):
     # Check if i'm dead
     if self.health <=0:  
       self.delete = True
-      self.game_state.score += 50
+      self.game_state.score += 200

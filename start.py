@@ -13,7 +13,7 @@
     Originally designed for Coding Pirates - Helsinge Denmark, 
     By Simon Rigét 2019
     ----------------------------------------------------------------------------
-    Requires pygame, Qt5 and PyQtWebEngine libraries to be installed.
+    Requires pygame, Qt5 and screeninfo libraries to be installed.
 
     ----------------------------------------------------------------------------
 
