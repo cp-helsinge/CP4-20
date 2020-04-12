@@ -67,8 +67,10 @@ class LevelControle:
       pygame.mixer.music.stop()
     except: pass
 
-    if( level ):
-     self.game_state.level = level
+    if  level:
+      if level >= len( story.level ): 
+        level = len( story.level ) -1
+      self.game_state.level = level
     else:
       self.game_state.level += 1
 

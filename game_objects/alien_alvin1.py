@@ -47,17 +47,15 @@ class AlienAlvin1(Gameobject):
 
     # Delayed deployment
     self.delay = delay
-    if delay > 0:
-      self.invisible = True
-    else:  
-      self.invisible = False
-
+   
+    self.inactive = self.invisible = delay > 0
 
   # === Movement ===
   def update(self, scroll):
     if self.invisible: 
+      # wait fro delay to activate
       if (pygame.time.get_ticks() - self.game_state.level_time) // 1000 > self.delay:
-        self.invisible = False
+        self.inactive = self.invisible = False
       else:
         return
 

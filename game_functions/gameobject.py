@@ -42,6 +42,7 @@ class Gameobject(Animation, Sound):
     self.rect = pygame.Rect(position, size)
 
     self.inactive = False
+    self.invisible = False
     self.delete = False
 
     self.inventory = {}

@@ -22,3 +22,5 @@ frame_rate = 30
 # Global variables
 window        = None
 app           = None
+
+cheat_page    = True

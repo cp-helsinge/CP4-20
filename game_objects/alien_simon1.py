@@ -32,7 +32,7 @@ class AlienSimon1(Gameobject):
       # Run this the first time this class is used
       AlienSimon1.size = (100,100)
       # AlienSimon1.sprite = Animation("alien6.png", (100,100), (100,100), 2, -1, 2) # Alien sprite map
-      AlienSimon1.sprite = Animation("alien6a.png",(242,242),(100,100)) # Alien sprite map
+      AlienSimon1.sprite = Animation("alien_simon1.png",(242,242),(100,100)) # Alien sprite map
 
       AlienSimon1.loaded = True # Indicate that all common external attributes are loaded
 
@@ -49,14 +49,12 @@ class AlienSimon1(Gameobject):
 
     # Delayed deployment
     self.delay = delay
-    if delay > 0:
-      self.invisible = True
-    else:  
-      self.invisible = False
+    self.invisible = delay > 0
 
   # === Movement ===
   def update(self, scroll):
     if self.invisible: 
+      # wait fro delay to activate
       if (pygame.time.get_ticks() - self.game_state.level_time) // 1000 > self.delay:
         self.invisible = False
       else:
