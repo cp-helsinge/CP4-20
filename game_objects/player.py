@@ -44,8 +44,12 @@ class Player(Gameobject):
     self.type = self.Type.PLAYER
     self.impact_power = 100
 
+
     # Make this object accessable to other objects
     self.game_state.player = self # !!!!!!!!!!
+
+    # Make sure position is within boundarys
+    self.move()
 
   # Draw on game surface
   def draw(self, surface):

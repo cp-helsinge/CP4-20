@@ -28,6 +28,7 @@ import sys
 import os
 import glob
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
+import pygame
 import game
 import config
 from game_functions import common, game_classes
@@ -67,9 +68,11 @@ class MainPage():
     self.widget.play_button.clicked.connect(lambda: navigate("play"))
     self.widget.exit_button.clicked.connect(lambda: navigate("exit"))
     if config.cheat_page:
-      self.widget.cheat_button.clicked.connect(lambda: navigate("cheat_page"))
-    else  :
-      self.widget.cheat_button.clicked.connect(lambda: navigate("main_page"))
+      cheat_button = QtWidgets.QPushButton('π', self.widget)
+      cheat_button.autoFillBackground = True
+      cheat_button.setGeometry(830,650,30,30)
+      cheat_button.setStyleSheet("QPushButton{background:transparent;color: #FFF; border : 0;font-family: sans-serif;};")
+      cheat_button.clicked.connect(lambda: navigate("cheat_page"))
 
 class CheatPage():
   def __init__(self, navigate):
@@ -79,27 +82,26 @@ class CheatPage():
     # Set maximum level
     self.widget.level.setMaximum(len(story.level)-1)
 
-    # Make list of file names in game objects
+    # Make list of game object classes
     self.game_objects = game_classes.GameClasses()
     for name in self.game_objects.class_list:
       self.widget.game_object.addItem(name)
     self.widget.game_object.clicked.connect(self.game_object_clicked)
 
-
     # Attach action to buttons
     self.widget.go_button.clicked.connect(lambda: self.cheat())
-    #self.widget.exit_button.clicked.connect(lambda: navigate("exit"))
-  
+    
+  # Show a sing object
   def game_object_clicked(self):
     print("Vis single object",self.widget.game_object.currentItem().text())
     window.hide()
     current_game = game.Game()
-    # Set game variables to start values.
-    #current_game.level_controle.set(self.widget.level.value())
-    #if self.widget.super_health.isChecked():
-    #  current_game.player.health = 100000000000000000
-    self.game_objects.add({'class_name': self.widget.game_object.currentItem().text()})
-    self.game_objects.add({'class_name': 'Player'})
+
+    current_game.game_objects.add({'class_name': 'Background', 'color':  pygame.Color('darkblue')})
+    # Set up invisible emeny, to prevent game over
+    current_game.game_objects.add({'class_name': 'AlienAlvin1', 'delay':1000000000000000}) 
+    current_game.game_objects.add({'class_name': 'Player','position': current_game.rect.midbottom})
+    current_game.game_objects.add({'class_name': self.widget.game_object.currentItem().text()})
     current_game.loop()
     del current_game
     window.show()

@@ -23,7 +23,7 @@ class ShotPhotonTorpedoNx01(Gameobject):
   count = 0
 
   # Initialize Shot 
-  def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
+  def __init__(self, boundary = None, position = None, direction = 90, speed = 0):
     # Load animations and sounds first time this class is used
     if not ShotPhotonTorpedoNx01.loaded:
       ShotPhotonTorpedoNx01.sprite = Animation("photon_torpedo_nx01.png",(128,128),(50,50)) 
@@ -34,7 +34,8 @@ class ShotPhotonTorpedoNx01(Gameobject):
     Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
     
     # Adjust position to be centered on top of position
-    self.rect.midbottom = position
+    if position:
+      self.rect.midbottom = position
 
     # Set charakteristica other than default
     self.type = self.Type.FREINDLY

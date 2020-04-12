@@ -20,7 +20,7 @@ class AlienShot1(Gameobject):
   count = 0
 
   # Initialize Shot 
-  def __init__(self, boundary = None, position = None, direction = 90, speed = 10):
+  def __init__(self, boundary = None, position = None, direction = 270, speed = 10):
     # Load animations and sounds first time this class is used
     if not AlienShot1.loaded:
       AlienShot1.sprite = Animation("shot_alien1.png") 
@@ -31,9 +31,9 @@ class AlienShot1(Gameobject):
     Gameobject.__init__(self, boundary, position,self.sprite.size, speed, direction)
     
     # Adjust position to be centered under position
-    self.rect.midtop = position
-    self.speed += 10
-
+    if position:
+      self.rect.midtop = position
+  
     # Set charakteristica other than default
     self.type = self.Type.UNFREINDLY
     self.impact_power = 10
