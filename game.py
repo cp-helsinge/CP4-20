@@ -25,7 +25,7 @@ https://stackoverflow.com/questions/32533585/pygame-projects-wont-run-pygame-err
 ============================================================================"""
 # Import python modules
 import pygame
-from pygame.locals import *
+#from pygame.locals import *
 import time
 import os
 import sys

@@ -20,7 +20,7 @@ class AlienShot1(Gameobject):
   count = 0
 
   # Initialize Shot 
-  def __init__(self, boundary = None, position = None, direction = 270, speed = 10):
+  def __init__(self, boundary = None, position = None, direction = 270, speed = 15):
     # Load animations and sounds first time this class is used
     if not AlienShot1.loaded:
       AlienShot1.sprite = Animation("shot_alien1.png") 

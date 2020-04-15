@@ -82,7 +82,7 @@ class AlienAlvin1(Gameobject):
         'class_name': 'AlienShot1',
         'position': self.rect.midbottom,
         'boundary': None,
-        'speed': 5,
+        'speed': 15,
         'direction': math.degrees(math.atan2( target[0] - self.rect.x, target[1] - self.rect.y )) -90
       })
 
