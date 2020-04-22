@@ -13,7 +13,7 @@
   Originally designed for Coding Pirates - Helsinge Denmark, 
   By Simon Rigét 2019
   ----------------------------------------------------------------------------
-  Requires pygame, Qt5 and screeninfo libraries to be installed.
+  Requires pygame, Qt5, screeninfo, pickledb libraries to be installed.
 
   ----------------------------------------------------------------------------
 
@@ -29,9 +29,10 @@ import os
 import glob
 from PyQt5 import uic, QtCore, QtWidgets, QtGui
 import pygame
+
 import game
 import config
-from game_functions import common, game_classes
+from game_functions import common, game_classes, highscore
 from game_attributes import story
 
 config.root_path     = os.path.join(os.path.dirname(__file__))       # Root of this package
@@ -41,8 +42,7 @@ config.html_path     = os.path.join(config.root_path,'qt','html')    # QT HTML p
 config.gfx_path      = os.path.join(config.root_path,'gfx')          # Graphic art and sprites
 config.sound_path    = os.path.join(config.root_path,'sound')        # sound effects and music
 
-config.screen_width  = 1000
-config.screen_height = 700
+current_game = None # Global 
 
 # Create a widget, using a HTML file (located in the html_path.
 # The  widget can only interpret simple HTML. It uses a subset of HTML 3.2 and 4. And css 2.1
@@ -67,6 +67,7 @@ class MainPage():
     self.widget.boring_button.clicked.connect(lambda: navigate("boring_page"))
     self.widget.play_button.clicked.connect(lambda: navigate("play"))
     self.widget.exit_button.clicked.connect(lambda: navigate("exit"))
+    self.widget.highscore_button.clicked.connect(lambda: navigate("highscore"))
     if config.cheat_page:
       cheat_button = QtWidgets.QPushButton('π', self.widget)
       cheat_button.autoFillBackground = True
@@ -74,13 +75,71 @@ class MainPage():
       cheat_button.setStyleSheet("QPushButton{background:transparent;color: #FFF; border : 0;font-family: sans-serif;};")
       cheat_button.clicked.connect(lambda: navigate("cheat_page"))
 
+class HighScore():
+  def __init__(self, navigate):
+    # Load a UI resource file
+    self.widget = uic.loadUi(os.path.join(config.qt_path,'highscore.ui'))
+    self.widget.parent = self
+
+    # Set machine default user name
+    name = self.widget.new_highscore_dialog.findChild(QtWidgets.QLineEdit, 'name')
+    name.setText(QtCore.QDir().home().dirName())
+    
+    # Add buttons (to enable event handling)
+    buttonbox = self.widget.new_highscore_dialog.findChild(QtWidgets.QDialogButtonBox, 'new_highscore_dialog_buttons')
+    __apply = buttonbox.addButton(QtWidgets.QDialogButtonBox.Apply)
+    __apply.clicked.connect(self.__save_highscore)
+    __apply.setAutoDefault(True)
+    buttonbox.addButton(QtWidgets.QDialogButtonBox.Discard).clicked.connect(self.widget.new_highscore_dialog.hide )
+    self.widget.new_highscore_dialog.hide()
+
+    # High score lists
+    self.highscore = highscore.Highscore(config.highscore_key)
+
+    self.update()
+  
+  def __save_highscore(self):
+    # register new score
+    self.highscore.set( self.widget.new_highscore_dialog.findChild(QtWidgets.QLineEdit, 'name').text(), self.new_score)
+    # Display the new list
+    self.update()
+    # Hide the dialog box  
+    self.widget.new_highscore_dialog.hide()
+  
+  def update(self):
+    # Global list
+    self.widget.global_highscore.clear()
+    place = 1
+    for i in self.highscore.get_global():
+      self.widget.global_highscore.addItem( '{place:<3} {score:<6} {name:<8}'.format(**i,place=place) )
+      place+=1
+
+    # Local list
+    self.widget.local_highscore.clear()
+    place = 1
+    for i in self.highscore.get_local():
+      self.widget.local_highscore.addItem(  '{place:<3} {score:<6} {name:<8}'.format( **i,place=place) )
+      place+=1
+
+  def set(self):
+    global current_game
+    self.new_score = current_game.score
+    # Display new high score
+    name_input = self.widget.new_highscore_dialog.findChild(QtWidgets.QLabel, 'message')
+    name_input.setText("Your score: " + str(self.new_score ))
+    # Display dialog box (It will disappear again when the user clicks a button)
+    self.widget.new_highscore_dialog.show()
+    name_input.setFocus()
+
 class CheatPage():
   def __init__(self, navigate):
+    self.navigate = navigate
     # Load a UI resource file
     self.widget = uic.loadUi(os.path.join(config.qt_path,'cheat_page.ui'))
 
     # Set maximum level
     self.widget.level.setMaximum(len(story.level)-1)
+    self.widget.level.setValue(len(story.level)-1)
 
     # Make list of game object classes
     self.game_objects = game_classes.GameClasses()
@@ -93,6 +152,8 @@ class CheatPage():
     
   # Show a sing object
   def game_object_clicked(self):
+    global current_game
+
     print("Vis single object",self.widget.game_object.currentItem().text())
     window.hide()
     current_game = game.Game()
@@ -106,19 +167,24 @@ class CheatPage():
     del current_game
     window.show()
 
-
   def cheat(self):
+    global current_game
     level = self.widget.level.text()
-    print("Start at level",level, self.widget.super_health.isChecked())
+    print("Start at", level, "Superhealth:", self.widget.super_health.isChecked())
     window.hide()
     current_game = game.Game()
     # Set game variables to start values.
     current_game.level_controle.set(self.widget.level.value())
     if self.widget.super_health.isChecked():
       current_game.player.health = 100000000000000000
+
     current_game.loop()
-    del current_game
     window.show()
+    self.navigate('highscore')
+    highscore = window.stacked_widget.widget(window.page['highscore']).parent
+    highscore.update()
+    highscore.set()
+    del current_game
 
 class MainWindow(QtWidgets.QWidget):
   def __init__(self, *args, **kwargs):
@@ -146,6 +212,7 @@ class MainWindow(QtWidgets.QWidget):
     self.page['credits_page'] = self.stacked_widget.addWidget(SimpleHTMLPage('credits.html').widget)
     self.page['boring_page'] = self.stacked_widget.addWidget(SimpleHTMLPage('boring.html').widget)
     self.page['cheat_page'] = self.stacked_widget.addWidget(CheatPage(self.navigate).widget)
+    self.page['highscore'] = self.stacked_widget.addWidget(HighScore(self.navigate).widget)
 
     self.keyPressEvent = self.newOnkeyPressEvent
     self.show()
@@ -159,11 +226,14 @@ class MainWindow(QtWidgets.QWidget):
             self.navigate('exit')
           if e.key() == QtCore.Qt.Key_Return:
             self.navigate('play')
-        #else:
-        # self.navigate('main_page')
+        else:
+          if e.key() == QtCore.Qt.Key_Escape:
+             self.navigate('main_page')
 
   # Navigate
   def navigate(self, page_name):
+    global current_game
+
     #Hide back button, on main page
     if page_name == 'main_page':
       self.back_button.hide()
@@ -187,11 +257,13 @@ class MainWindow(QtWidgets.QWidget):
       self.hide()
       current_game = game.Game()
       current_game.start()
+      window.show()
+      self.navigate('highscore')
+      highscore = window.stacked_widget.widget(window.page['highscore']).parent
+      highscore.update()
+      highscore.set()
       del current_game
-      self.show()
-      self.back_button.hide()
 
-  
 # Start application
 app = QtWidgets.QApplication(sys.argv)
 window = MainWindow()

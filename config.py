@@ -24,3 +24,5 @@ window        = None
 app           = None
 
 cheat_page    = True
+
+highscore_key = "CP4-2020-K124FAbb36J21"

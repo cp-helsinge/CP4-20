@@ -169,6 +169,35 @@ opacity: 0;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="highscore_button">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>580</y>
+        <width>100</width>
+        <height>100</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>DejaVu Sans</family>
+        <pointsize>26</pointsize>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Heighscore">Heighscore list</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: qradialgradient(cx: 0.3, cy: -0.4,fx: 0.3, fy: -0.4,radius: 1.35,stop: 0 #fff, stop: 1 #bbb);
+background-image: url('qt/highscore.png');</string>
+      </property>
+      <property name="inputMethodHints">
+       <set>Qt::ImhHiddenText</set>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_2"/>
    </widget>
