@@ -48,7 +48,7 @@ current_game = None # Global
 # The  widget can only interpret simple HTML. It uses a subset of HTML 3.2 and 4. And css 2.1
 # External links wil be opned in the system browser, where as internal links wil be followed 
 # in the document root directory (html_path)
-# If you need a comprehensive HTML browser, use the QWebEngine module.
+# If you need a comprehensive HTML browser, use the QWebEngine module. 
 class SimpleHTMLPage:
   def __init__(self, url):
     self.widget = QtWidgets.QTextBrowser()
