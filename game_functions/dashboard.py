@@ -8,6 +8,7 @@
 import pygame
 from game_functions import animation
 import config
+import os
 
 # Settings
 background_color = (16,64,96)
@@ -35,7 +36,9 @@ class Dashboard:
     self.health_bar_rect.center = self.rect.center
 
     # Create a font 
-    self.font = pygame.font.Font( font_name, height // 2 )
+    #self.font = pygame.freetype.SysFont('Arial',  height // 2, bold=True)
+    #self.font.origin = True
+    self.font = pygame.font.Font( os.path.join(config.gfx_path,font_name), height // 2 )
  
   def draw(self, surface):
     # Paint background

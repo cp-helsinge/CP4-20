@@ -272,7 +272,11 @@
    <string>Cheat</string>
   </property>
   <property name="autoFillBackground">
-   <bool>true</bool>
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background: url(qt/cheat_page_bg.png);
+</string>
   </property>
   <widget class="QPushButton" name="go_button">
    <property name="geometry">
@@ -282,6 +286,9 @@
      <width>80</width>
      <height>80</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Go</string>
@@ -412,6 +419,7 @@
    </property>
    <property name="font">
     <font>
+     <family>Ubuntu</family>
      <weight>75</weight>
      <bold>true</bold>
     </font>
